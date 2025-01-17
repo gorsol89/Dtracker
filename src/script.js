@@ -11,8 +11,11 @@ import Point from 'ol/geom/Point';
 import Icon from 'ol/style/Icon';
 import Style from 'ol/style/Style';
 
-// WeatherAPI Key (replace with your actual key)
-const weatherApiKey = '9a7317d72e8341e799f120847251701'; // Replace with your API key from weatherapi.com
+// WeatherAPI Key (your provided key)
+const weatherApiKey = '9a7317d72e8341e799f120847251701';
+
+// Store user name
+let userName = '';
 
 // Create OpenLayers Map
 const map = new Map({
@@ -34,6 +37,12 @@ const locationLayer = new VectorLayer({
     source: locationSource,
 });
 map.addLayer(locationLayer);
+
+// Function to set user name and display it
+window.setUserName = function () {
+    userName = document.getElementById('userName').value; // Get name from input field
+    document.getElementById('user-name').innerHTML = `Name: ${userName}`; // Display the name above the pin
+};
 
 // Function to show the user's location on the map using Geolocation API
 function showUserLocationAndWeather() {
@@ -59,7 +68,7 @@ function showUserLocationAndWeather() {
                 userFeature.setStyle(
                     new Style({
                         image: new Icon({
-                            src: '/public/icons/pin-icon.png', // Use the user pin icon from the icons folder
+                            src: '/icons/pin-icon.png', // Use the user pin icon from the icons folder
                             scale: 0.1, // Adjust the size of the icon
                         }),
                     })
@@ -72,6 +81,11 @@ function showUserLocationAndWeather() {
                 // Center the map on the user's location
                 map.getView().setCenter(coordinates);
                 map.getView().setZoom(14); // Set zoom level when the user location is shown
+
+                // Display user name above the pin if it exists
+                if (userName) {
+                    document.getElementById('user-name').innerHTML = `Name: ${userName}`;
+                }
 
                 // Fetch and display the weather
                 fetchWeather(latitude, longitude);
