@@ -1,0 +1,23 @@
+{
+  "name": "dtracker",
+  "version": "1.0.0",
+  "description": "A  hunt map-based tracker using OpenLayers and MQTT",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "cesium": "^1.125.0",
+    "mqtt": "^5.10.3",
+    "ol": "^10.3.1",
+    "ol-cesium": "^2.17.0"
+  },
+  "devDependencies": {
+    "vite": "^4.5.5",
+    "vite-plugin-cesium": "^1.2.23"
+  },
+  "author": "",
+  "license": "ISC"
+}
