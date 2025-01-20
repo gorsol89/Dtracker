@@ -3,8 +3,13 @@ import cesium from 'vite-plugin-cesium';
 
 // Vite configuration
 export default defineConfig({
-  plugins: [cesium()],
+  plugins: [cesium()], // Include Cesium plugin
   build: {
-    chunkSizeWarningLimit: 1000, // Optional: Increase chunk size limit for Cesium
+    outDir: 'dist', // Output directory for the build
+    rollupOptions: {
+      input: './public/index.html', // Ensure Vite uses the index.html from the public folder
+    },
+    chunkSizeWarningLimit: 1000, // Optional: Increase chunk size limit for Cesium if needed
   },
+  publicDir: 'public', // Ensure the public directory is properly referenced by Vite
 });
