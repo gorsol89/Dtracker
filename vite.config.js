@@ -1,16 +1,17 @@
 import { defineConfig } from 'vite';
 import cesium from 'vite-plugin-cesium';
+import path from 'path';
 
 export default defineConfig({
-  root: './dtracker', // Set the root directory to 'dtracker' where index.html is located
+  root: './dtracker', // Root directory set to 'dtracker' containing index.html
   plugins: [cesium()], // Include Cesium plugin
   build: {
-    outDir: '../dist', // Output folder for the build files
+    outDir: '../dist', // Output build files to '../dist' folder at root
     rollupOptions: {
-      input: './dtracker/index.html', // Entry point for the app
+      input: path.resolve(__dirname, 'dtracker/index.html'), // Use absolute path for entry point
     },
     chunkSizeWarningLimit: 1000, // Avoid warnings for Cesium bundle size
-    emptyOutDir: true, // Clears the dist directory before each build
+    emptyOutDir: true, // Clear dist folder before each build
   },
-  publicDir: '../public', // Set the public directory for static assets
+  publicDir: '../public', // Directory for public/static assets
 });
