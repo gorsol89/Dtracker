@@ -32,7 +32,12 @@ let dogMarkerLayer;       // Layer for the dog marker
 let routeVectorSource;    // Source for the route trace
 let routeVectorLayer;     // Layer for the route trace
 let isFirstLoad = true;
-let popup;                // Popup overlay for speed and distance
+let popup;                // Popup overlay for speed & route info
+
+// Variables for tracking session functionality:
+let isTracking = false;
+let trackingPoints = [];
+let trackingStartTime = null;
 
 const socketUrl = "wss://dtracker.no/ws/";
 const socket = new WebSocket(socketUrl);
@@ -149,7 +154,8 @@ async function fetchData() {
 
 // Process the CSV data to combine Latitude and Longitude per timestamp,
 // update the current location marker, draw the route trace,
-// compute & display speed and total distance traveled (last 10 min) in the popup.
+// compute & display speed and total distance (last 10 min) in the popup,
+// and, if tracking is active, record points for the tracking session.
 function processData(data) {
   const rows = data.split('\n').filter(row => row.trim() !== '');
   let coordinates = {};
@@ -211,14 +217,21 @@ function processData(data) {
       speedText = "Speed: " + speed.toFixed(2) + " km/h";
     }
     
-    // Compute total distance traveled (last 10 minutes) using the route line.
+    // Compute total distance traveled (last 10 minutes) using the route trace.
     const routeLength = ol.sphere.getLength(routeLine);
     const distanceText = "Distance: " + (routeLength / 1000).toFixed(2) + " km";
     
-    // Update the popup content.
+    // Update the popup content and position it at the latest point.
     document.getElementById('popup-content').innerHTML = speedText + "<br>" + distanceText;
-    // Position the popup overlay at the latest point.
     popup.setPosition(latest.coord);
+    
+    // If tracking is active, record the latest point (if not duplicate).
+    if (isTracking && points.length > 0) {
+      const latestPoint = points[points.length - 1];
+      if (trackingPoints.length === 0 || trackingPoints[trackingPoints.length - 1].time !== latestPoint.time) {
+        trackingPoints.push(latestPoint);
+      }
+    }
   } else {
     document.getElementById('popup-content').innerHTML = "Speed: N/A<br>Distance: N/A";
     popup.setPosition(undefined);
@@ -263,6 +276,36 @@ document.querySelectorAll('#commandsPanel button').forEach(button => {
 });
 
 /**************************************************
- * 4. Initialize Everything
+ * 4. Tracking Session Functionality (Gå på tur)
+ **************************************************/
+document.getElementById('toggleTracking').addEventListener('click', function() {
+  if (!isTracking) {
+    // Start tracking session
+    isTracking = true;
+    trackingPoints = [];
+    trackingStartTime = new Date();
+    this.textContent = "Stopp tur";
+    document.getElementById('trackingOverview').innerHTML = "Tracking started...";
+  } else {
+    // Stop tracking session
+    isTracking = false;
+    this.textContent = "Gå på tur";
+    let totalDistance = 0;
+    for (let i = 1; i < trackingPoints.length; i++) {
+      let lonlat1 = ol.proj.toLonLat(trackingPoints[i - 1].coord);
+      let lonlat2 = ol.proj.toLonLat(trackingPoints[i].coord);
+      totalDistance += ol.sphere.getDistance(lonlat1, lonlat2);
+    }
+    totalDistance = totalDistance / 1000; // km
+    let totalTime = (trackingPoints.length >= 2 ? (new Date(trackingPoints[trackingPoints.length - 1].time) - new Date(trackingPoints[0].time)) / 3600000 : 0); // hours
+    let avgSpeed = (totalTime > 0 ? totalDistance / totalTime : 0);
+    let overviewText = "Total Distance: " + totalDistance.toFixed(2) + " km<br>" +
+                       "Average Speed: " + avgSpeed.toFixed(2) + " km/h";
+    document.getElementById('trackingOverview').innerHTML = overviewText;
+  }
+});
+
+/**************************************************
+ * 5. Initialize Everything
  **************************************************/
 initMap();

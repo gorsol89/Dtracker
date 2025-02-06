@@ -21,11 +21,11 @@
   <main>
     <!-- Map container -->
     <div id="map"></div>
-    <!-- Popup overlay for speed and distance -->
+    <!-- Popup overlay (for current speed and distance over 10 min) -->
     <div id="popup" class="ol-popup">
       <div id="popup-content"></div>
     </div>
-    <!-- Commands button and panel -->
+    <!-- Commands panel -->
     <button id="commandsButton">Commands</button>
     <div id="commandsPanel">
       <button data-command="DT-BAND=ALT">Set Bands ALT</button>
@@ -34,12 +34,18 @@
       <button data-command="DT-RESTART">Restart</button>
       <button data-command="DT-UPDATE">Update</button>
     </div>
+    <!-- Speed display (optional if you want it separately) -->
+    <div id="speed"></div>
     <!-- Log panel -->
     <div id="log"></div>
+    <!-- Tracking session button and overview -->
+    <button id="toggleTracking">Gå på tur</button>
+    <div id="trackingOverview"></div>
   </main>
   <footer>
     <!-- (Optional footer content) -->
   </footer>
+  
   <!-- OpenLayers JS -->
   <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
   <!-- Our JavaScript -->
