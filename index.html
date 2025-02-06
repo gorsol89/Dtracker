@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <!-- Prevent caching -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dtracer | Enjoy the hunt!</title>
-  <!-- Dtracker CSS -->
-  <link rel="stylesheet" href="style.css">
-  <!-- OpenLayers CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTracker | Enjoy the Hunt!</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
+
+    <!-- OpenLayers JS -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
 </head>
 <body>
-  <header>
-    <img src="dtracker-icon.png" alt="DTracker Icon" />
-    <h1>DTracker</h1>
-  </header>
-  <main>
-    <!-- Map container -->
-    <div id="map"></div>
-    <!-- Popup overlay (for current speed and distance over 10 min) -->
-    <div id="popup" class="ol-popup">
-      <div id="popup-content"></div>
-    </div>
-    <!-- Commands panel -->
-    <button id="commandsButton">Commands</button>
-    <div id="commandsPanel">
-      <button data-command="DT-BAND=ALT">Set Bands ALT</button>
-      <button data-command="DT-BAND=20">Set Band 20</button>
-      <button data-command="DT-BAND=31">Set Band 31</button>
-      <button data-command="DT-RESTART">Restart</button>
-      <button data-command="DT-UPDATE">Update</button>
-    </div>
-    <!-- Speed display (optional if you want it separately) -->
-    <div id="speed"></div>
-    <!-- Log panel -->
-    <div id="log"></div>
-    <!-- Tracking session button and overview -->
-    <button id="toggleTracking">Gå på tur</button>
-    <div id="trackingOverview"></div>
-  </main>
-  <footer>
-    <!-- (Optional footer content) -->
-  </footer>
-  
-  <!-- OpenLayers JS -->
-  <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
-  <!-- Our JavaScript -->
-  <script src="script.js" defer></script>
+
+    <!-- Header -->
+    <header>
+        <img src="dtracker-icon.png" alt="DTracker Icon">
+        <h1>DTracker</h1>
+    </header>
+
+    <!-- Map Container -->
+    <main>
+        <div id="map"></div>
+
+        <!-- Popups -->
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer">&times;</a>
+            <div id="popup-content"></div>
+        </div>
+
+        <div id="info-popup" class="ol-popup">
+            <a href="#" id="info-popup-closer" class="ol-popup-closer">&times;</a>
+            <div id="info-popup-content"></div>
+        </div>
+
+        <!-- Tracking Overview -->
+        <div id="trackingOverview">Tracking Overview</div>
+
+        <!-- Bottom Navigation Bar -->
+        <div id="controls">
+            <button id="route10">Last 10 Min</button>
+            <button id="route15">Last 15 Min</button>
+            <button id="route30">Last 30 Min</button>
+            <button id="infoButton">Device Info</button>
+            <button id="toggleTracking">Gå på tur</button>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="script.js" defer></script>
+
 </body>
 </html>
