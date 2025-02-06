@@ -88,7 +88,7 @@ header h1 {
 #infoButton { background: #ffc107; color: #333; }
 #toggleTracking { background: #28a745; }
 
-/* 🔹 Popups */
+/* 🔹 Popups Positioned Next to Dog Icon */
 .ol-popup {
     position: absolute;
     background: rgba(255, 255, 255, 0.95);
@@ -98,12 +98,7 @@ header h1 {
     font-size: 0.85rem;
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Prevent popups from overlapping controls */
-.ol-popup[data-type="info"] {
-    bottom: 40px !important;
-    left: 10px !important;
+    transform: translate(30px, -40px); /* Moves the popup to the right of the dog icon */
 }
 
 /* Close Button */

@@ -580,3 +580,37 @@ async function getNearestTown(coordinate) {
  * 12. Initialize Everything
  **************************************************/
 initMap();
+
+/**************************************************
+ * Position Speed & Distance Popup Next to Dog Icon
+ **************************************************/
+function updateSpeedDistancePopup(coordinate, speed, distance) {
+  const popupContent = document.getElementById("popup-content");
+  popupContent.innerHTML = `Speed: ${speed.toFixed(2)} km/h<br>Distance: ${distance.toFixed(2)} km`;
+  
+  // Set position of popup next to the icon
+  popup.setPosition(coordinate);
+  document.getElementById("popup").style.transform = "translate(30px, -40px)";
+}
+
+// Add event listener to close the popup
+document.getElementById("popup-closer").addEventListener("click", function(event) {
+  event.preventDefault();
+  popup.setPosition(undefined); // Hide popup
+  document.getElementById("popup").style.display = "none";
+});
+
+/**************************************************
+ * Zoom to Device Button Functionality
+ **************************************************/
+document.getElementById("zoomToDevice").addEventListener("click", function() {
+  if (currentCoordinate) {
+      map.getView().animate({
+          center: currentCoordinate,
+          zoom: 18,
+          duration: 500
+      });
+  } else {
+      alert("No location data available yet.");
+  }
+});
