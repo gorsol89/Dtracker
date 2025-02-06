@@ -1,0 +1,124 @@
+/* Basic reset and box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  overflow: hidden; /* Disable scrolling */
+}
+
+/* Header styling */
+header {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+header img {
+  height: 50px;
+  width: auto;
+  margin-right: 15px;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* The map container fills the full viewport (below the header) */
+#map {
+  width: 100%;
+  height: calc(100vh - 80px); /* adjust if header/footer height changes */
+  position: relative;
+  transform: translateZ(0);
+}
+
+/* Popup styling (for speed and distance) */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  min-width: 150px;
+  text-align: center;
+  font-size: 14px;
+  z-index: 30;
+}
+.ol-popup:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 50%;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 50%;
+  margin-left: -11px;
+}
+
+/* Commands panel styling */
+#commandsPanel {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 10px;
+  display: none;
+  z-index: 20;
+}
+
+#commandsPanel button {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+#commandsButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 25;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Log panel styling */
+#log {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  z-index: 20;
+}
